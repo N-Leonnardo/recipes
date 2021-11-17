@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, flash
 from flask_app import app
 from flask_app.models.user import User
-from flask_app.models.message import Message
+from flask_app.models.recipe import Recipe
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -13,13 +13,15 @@ def register():
         return redirect('/')
     # create the hash
     pw_hash = bcrypt.generate_password_hash(request.form['pw'])
+    pwconfirmation_hash = bcrypt.generate_password_hash(request.form['pwconfirmation'])
     print(pw_hash)
     # put the pw_hash into the data dictionary
     data = {
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
-        "pw" : pw_hash
+        "pw" : pw_hash,
+        "pwconfirmation" : pwconfirmation_hash
     }
     # Call the save @classmethod on User
     user_id = User.save(data)
@@ -47,16 +49,6 @@ def login():
     # never render on a post!!!
     return redirect("/dashboard")
 
-@app.route('/dashboard')
-def dashboard():
-    data = {
-        "user_id": session['user_id']
-    }
-    users = User.get_byid(data)
-    receivers = User.get_all()
-    messages = Message.get_all_messages(data)
-    names = User.get_all_names(data)
-    return render_template('dashboard.html', users=users, receivers = receivers, messages = messages, names = names)
 
 
 @app.route("/logout", methods=['POST'])

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/add_recipe" method="POST">
+        <label for="name">Title:</label>
+        <input type="text" name="name" value="{{recipes.name}}">
+
+        <label for="instruction">Description:</label>
+        <input type="text" name="description" value="{{recipes.description}}">
+
+        <label for="instruction">Instruction:</label>
+        <input type="text" name="instruction" value="{{recipes.instruction}}">
+
+        <label for="under30"></label>
+        <select name="under30" id="under30" value="{{recipes.under30}}>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <input type="submit" value="Add Recipe">
+    </form> 
+
+</body>
+</html>

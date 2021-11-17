@@ -13,12 +13,22 @@ class User:
         self.last_name = data['last_name']
         self.email = data['email']
         self.pw = data['pw']
+        self.pwconfirmation = data['pwconfirmation']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
     @staticmethod
     def validate_user( user ):
         is_valid = True
+        if len(user['first_name']) < 2:
+            flash("Name must be at least 2 characters.")
+            is_valid = False
+        if len(user['last_name']) < 2:
+            flash("Bun must be at least 3 characters.")
+            is_valid = False
+        if (user['pw']) != (user['pwconfirmation']):
+            flash("Password must match")
+            is_valid = False
         if not EMAIL_REGEX.match(user['email']): 
             flash("Invalid email address!")
             is_valid = False
