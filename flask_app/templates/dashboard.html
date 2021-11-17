@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin: 10px;
+        font-family: sans-serif;
+        color: rgb(50, 50, 50);
+    }
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .sendmessage{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .message{
+        background-color: aqua;
+        border-radius: 10px;
+        width: 40%;
+    }
+    .widthmax{
+        width: 200px;
+        height: 100px;
+    }
+</style>
+<body>
+    <h1>Welcome {{users.first_name}} {{users.last_name}}</h1>
+    <div class="message">
+        <h3>Your Messages</h3>
+        {%for name in names %}
+            <div>
+                <h6>{{name.first_name}} {{name.last_name}} said:</h3>
+            </div>
+            {% endfor %}
+            
+        {%for message in messages %}
+            <p>{{message.message}} </p>
+        {% endfor %}
+
+
+    </div>
+    <div class="message">
+        <form class="sendmessage" action="/addtomessages" method="POST">
+            <h3>Send a message here:</h3>
+            <label for="receiver_id">Who are you sending it?</label>
+            <select name="receiver_id" id="receiver_id">
+                {%for one_receiver in receivers %}
+                    {%if one_receiver.id != users.id %}
+                    <option value="{{one_receiver.id}}">{{one_receiver.first_name}} {{one_receiver.last_name}}</option>
+                    {% endif %}
+                {% endfor %}
+
+            <h6>Your message:</h6>
+            <input class = widthmax type="text" name="message" id="">
+            <input type="submit" value="Send message">
+        </form>
+    </div>
+
+</body>
+</html>
